@@ -1,3 +1,5 @@
+var api_base_url = 'https://efokchxw0b.execute-api.ap-northeast-1.amazonaws.com/api'
+
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");

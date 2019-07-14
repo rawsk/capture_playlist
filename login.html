@@ -10,17 +10,14 @@
     <script src="js/common.js"></script>
     <script>
         var cookie = getCookieArray(document.cookie);
-        console.log(cookie);
         if (cookie['access_token']) {
-            location.href = "video.html";
+            location.href = 'video.html';
         }
 
         function login() {
-            axios.get('https://httpbin.org/get?hoge=a')
+            axios.get(api_base_url + '/login')
             .then(function (response) {
-                // handle success
-                console.log(response)
-                // location.href = '';
+                location.href = response.data;
             });
         }
     </script>

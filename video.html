@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!--
- *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
- *
- *  Use of this source code is governed by a BSD-style license
- *  that can be found in the LICENSE file in the root of the source
- *  tree.
--->
 <html>
 <head>
 
@@ -25,9 +18,13 @@
 
 <body>
 
+    <button type="button" id="start" onclick="start()">video start</button> 
+
+    <br>
+
     <label for="videoSource">Video source: </label><select id="videoSource"></select>
 
-    <button type="button" onclick="">プレイリスト</button>
+    <button type="button" onclick="playlist()">プレイリスト</button>
 
     <br>
 
@@ -41,13 +38,11 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/common.js"></script>
 <script>
-    var code = getQueryVariable('code')
+    var code = getQueryVariable('code');
     if (code) {
-        axios.get('')
+        axios.get(api_base_url + '/token?code=' + code)
         .then(function (response) {
-            // handle success
-            console.log(response);
-            document.cookie = '';
+            document.cookie = 'access_token=' + response.data;
         })
     }
 </script>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <!-- <meta name="description" content="WebRTC code samples"> -->
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+    <!-- <meta itemprop="description" content="Client-side WebRTC code samples"> -->
+    <!-- <meta itemprop="name" content="WebRTC code samples"> -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta id="theme-color" name="theme-color" content="#ffffff">
+
+    <base target="_blank">
+
+    <title>Capture</title>
+
+</head>
+
+<body>
+    <button id="login" onclick="login()">Spotifyログイン</button>
+
+    <div id="video_container" style="display: none;">
+        <label for="videoSource">Video source: </label><select id="videoSource"></select>
+
+        <button type="button" onclick="playlist()">プレイリスト</button>
+
+        <br>
+
+        <video id="video" playsinline autoplay width="200px"></video>
+
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <br>
+
+    <iframe id="playlist" src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/video.js"></script>
+<script>
+    function login() {
+        axios.get(api_base_url + '/login')
+        .then(function (response) {
+            location.href = response.data;
+        });
+    }
+
+    var code = getQueryVariable('code');
+    if (code) {
+        axios.get(api_base_url + '/token?code=' + code)
+        .then(function (response) {
+            document.cookie = 'access_token=' + response.data;
+            document.getElementById('video_container').style.display = 'block';
+            document.getElementById('login').style.display = 'none';
+            start();
+        })
+    }
+
+    var cookie = getCookieArray(document.cookie);
+    if (cookie['access_token']) {
+        document.getElementById('video_container').style.display = 'block';
+        document.getElementById('login').style.display = 'none';
+        start();
+    }
+</script>
+<script src="js/capture.js"></script>
+
+</body>
+</html>
